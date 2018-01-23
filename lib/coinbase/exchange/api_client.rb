@@ -145,10 +145,14 @@ module Coinbase
       #
       # Orders
       #
-      def bid(amt, price, params = {})
+      def bid(amt, price = nil, params = {})
         params[:product_id] ||= @default_product
         params[:size] = amt
-        params[:price] = price
+        if price 
+          params[:price] = price 
+        else
+          params[:type] = 'market'
+        end
         params[:side] = "buy"
 
         out = nil
@@ -160,10 +164,14 @@ module Coinbase
       end
       alias_method :buy, :bid
 
-      def ask(amt, price, params = {})
+      def ask(amt, price = nil, params = {})
         params[:product_id] ||= @default_product
         params[:size] = amt
-        params[:price] = price
+        if price 
+          params[:price] = price 
+        else
+          params[:type] = 'market'
+        end
         params[:side] = "sell"
 
         out = nil
